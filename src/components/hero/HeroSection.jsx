@@ -46,7 +46,7 @@ export default function HeroSection({ videoUrl }) {
                 </Badge>
               </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight text-shadow-lg">
-              גבאי אומנות השיפוצים
+              גבאי יזמות • בנייה • שיפוצים
             </h1>
             <div className="w-20 sm:w-32 h-1 gold-gradient rounded-full mx-auto mb-6 sm:mb-8"></div>
             <p className="text-xl sm:text-2xl text-gold font-medium mb-8">
