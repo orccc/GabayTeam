@@ -12,14 +12,17 @@ const testimonials = [
     videoUrl: "https://www.youtube.com/shorts/m4-MMAEefyw"
   },
   {
+    name: "משפחת כהן גבעת הרואה",
+    rating: 5,
+    testimonial: "טוב, אז אני רק משתף אתכם כלקוח מהחוויה שלי. הזמנתי את אליהו להצעת מחיר עבור עבודות פרוייקט מסירת מפתח. הם עמדו בזמנים ובעמטפת מקצועית של מספר עבודות מגוונות בבית שלי החל מריצוף, חשמל, אינסטלציה ועד עבודות אלומיניום על ידי אנשי מקצוע תחת קורת גג אחת. גבאי תודה רבה!",
+    image: "https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/23c58fd6b_9118f877-9a43-415c-97a7-7d09f3048032.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=63RiWxjTqIg"
+  },
+  {
     name: "עדן א.",
     rating: 5,
     testimonial: "ממליצה מאוד! בן אדם מאוד אמין לב מזהב עבודה יסודית באמת שכיום קשה לפגוש אנשי מקצוע כאלו ברמה הזאת של האמינות באדיבות וכמובן המקצעיות אין על אליהו איש מקצוע מיוחד במינו ממליצה באמת בחום"
-  },
-  {
-    name: "יוסי לוי",
-    rating: 5,
-    testimonial: "עבודות האלומיניום שביצעו בבית היו ברמה הגבוהה ביותר. זמינות מלאה ואמינות מוחלטת."
+
   },
   {
     name: "מסעדת הבית הלבן",
@@ -51,6 +54,42 @@ const StarRating = ({ rating }) => {
     </div>
   );
 };
+
+function getYouTubeEmbedUrl(videoUrl) {
+  if (!videoUrl) return null;
+  try {
+    const u = new URL(videoUrl);
+    const host = u.hostname.toLowerCase();
+
+    if (host.includes('youtu.be')) {
+      const id = u.pathname.split('/').filter(Boolean).pop();
+      return `https://www.youtube.com/embed/${id}`;
+    }
+
+    if (host.includes('youtube.com')) {
+      // shorts -> embed
+      if (u.pathname.startsWith('/shorts/')) {
+        const id = u.pathname.split('/shorts/')[1];
+        return `https://www.youtube.com/embed/${id}`;
+      }
+
+      // watch?v=ID
+      if (u.pathname === '/watch') {
+        const id = u.searchParams.get('v');
+        if (id) return `https://www.youtube.com/embed/${id}`;
+      }
+
+      // already embed
+      if (u.pathname.startsWith('/embed/')) {
+        return `https://${u.hostname}${u.pathname}`;
+      }
+    }
+
+    return videoUrl;
+  } catch (e) {
+    return videoUrl;
+  }
+}
 
 export default function TestimonialsSection() {
   const [activeVideo, setActiveVideo] = useState(null);
@@ -103,7 +142,7 @@ export default function TestimonialsSection() {
                 {testimonial.videoUrl && (
                   <div className="mt-4 flex justify-center">
                     <button
-                      onClick={() => setActiveVideo(testimonial.videoUrl)}
+                      onClick={() => setActiveVideo({ original: testimonial.videoUrl, embed: getYouTubeEmbedUrl(testimonial.videoUrl) })}
                       className="flex items-center gap-2 bg-black text-gold border border-gold/40 rounded-full px-6 py-2 text-sm font-semibold transition-all duration-300 transform hover:scale-110 select-none"
                     >
                       <Eye className="h-4 w-4" />
@@ -148,8 +187,18 @@ export default function TestimonialsSection() {
             >
               <X className="h-5 w-5" />
             </button>
+            <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+              <a
+                href={activeVideo.original || activeVideo}
+                target="_blank"
+                rel="noreferrer"
+                className="bg-black/60 text-white rounded-full px-3 py-1 text-sm font-medium"
+              >
+                פתח ביוטיוב
+              </a>
+            </div>
             <iframe
-              src={`${activeVideo.replace('/shorts/', '/embed/')}?autoplay=1&rel=0&playsinline=1`}
+              src={`${getYouTubeEmbedUrl(activeVideo && (activeVideo.embed || activeVideo))}?autoplay=1&rel=0&playsinline=1`}
               className="w-full h-full"
               width="100%"
               height="100%"
