@@ -2,7 +2,7 @@ import React from "react";
 import FloatingHeader from './components/common/FloatingHeader';
 
 export default function Layout({ children, currentPageName }) {
-  const logoUrl = "https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/6a03278e7_Gemini_Generated_Image_2v6ov42v6ov42v6o.png";
+  const logoUrl = "https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/23fa25ea4_Gemini_Generated_Image_rfrtvbrfrtvbrfrt.png?_gl=1*1pa0hzt*_gcl_au*MTUxNzk1NTA2Ni4xNzc2NzgwMjI5";
 
   return (
     <div style={{
