@@ -17,7 +17,7 @@ export default function AboutSection() {
         <div className="grid gap-8 lg:grid-cols-2 items-center">
           <div className="rounded-3xl overflow-hidden shadow-xl">
             <img
-              src="https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/5eefac8f4_IMG_1627.jpg?_gl=1*1581w6k*_gcl_au*MTUxNzk1NTA2Ni4xNzc2NzgwMjI5"
+              src="https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/ba83265cc_EliProfile1.png?_gl=1*13vg9be*_gcl_au*MTUxNzk1NTA2Ni4xNzc2NzgwMjI5"
               alt="אליהו גבאי" 
               className="w-full h-full object-cover min-h-[320px]"
             />
