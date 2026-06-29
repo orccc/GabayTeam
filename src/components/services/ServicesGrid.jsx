@@ -9,14 +9,28 @@ import {
   DoorOpen,
   Zap,
   Palette,
-  Settings
+  Settings,
+  Wrench,
+  Droplet
 } from "lucide-react";
 
 const services = [
   {
     icon: Hammer,
-    title: "ריצוף ואינסטלציה",
-    description: "עבודות ריצוף מקצועיות עם חומרים איכותיים ושירות אינסטלציה מלא",
+    title: "ריצוף",
+    description: "עבודות ריצוף מקצועיות עם חומרים איכותיים וגימור מושלם",
+    color: "from-gold to-gold-light"
+  },
+  {
+    icon: Wrench,
+    title: "אינסטלציה",
+    description: "שירות אינסטלציה מלא - גז, מים, חשמל ומערכות אחרות",
+    color: "from-gold-dark to-gold"
+  },
+  {
+    icon: Droplet,
+    title: "איטום",
+    description: "איטום מקצועי - גגות, חדרי רחצה, מרפסות וחזיתות עם חומרים בעלי אורך חיים ארוך",
     color: "from-gold to-gold-light"
   },
   {

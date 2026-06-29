@@ -154,8 +154,7 @@ export default function ContactSection() {
               <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-gold mx-auto mb-3 sm:mb-4" />
               <h3 className="text-lg sm:text-xl font-semibold mb-2">כתובת</h3>
               <p className="text-gray-300 text-sm sm:text-base">
-                תל אביב, ישראל<br />
-                שירות בכל הארץ
+                ירושלים, מודיעין, ישובי בנימין ומעלה אדומים
               </p>
             </CardContent>
           </Card>

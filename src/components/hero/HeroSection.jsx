@@ -112,32 +112,18 @@ export default function HeroSection({ videoUrl }) {
           </div>
 
           {/* Services Content */}
-          <div className="space-y-4 sm:space-y-6 animate-fade-in">
+          <div className="animate-fade-in">
             <div className="bg-black/50 backdrop-blur-md rounded-xl p-5 sm:p-7 border border-gold/30 hover:border-gold/60 transition-all duration-300 shadow-xl">
               <h3 className="text-xl sm:text-2xl font-bold text-gold mb-3 sm:mb-4">
-                שיפוצים מתקדמים
+                גבאי מאז שנות ה-90 ועד היום מעטפת מקצועית תחת קורת גג אחת
               </h3>
-              <p className="text-gray-200 leading-relaxed text-base sm:text-lg">
-                שיפוצים הכוללים עבודות ריצוף ואינסטלציה, גבס, שפכטל ועבודות צבע מתקדמות ומעוצבות, עבודות גמר וצביעה מקצועית באפקטים.
+              <p className="text-gray-200 leading-relaxed text-base sm:text-lg mb-4">
+                קבלן רשום המלווה את הפרויקט משלב התכנון ועד הגמר, עם בעלי מקצוע קבועים ופיקוח אישי.
               </p>
-            </div>
-
-            <div className="bg-black/50 backdrop-blur-md rounded-xl p-5 sm:p-7 border border-gold/30 hover:border-gold/60 transition-all duration-300 shadow-xl">
-              <h3 className="text-xl sm:text-2xl font-bold text-gold mb-3 sm:mb-4">
-                עבודות אלומיניום
-              </h3>
-              <p className="text-gray-200 leading-relaxed text-base sm:text-lg">
-                כל סוגי עבודות האלומיניום המתקדמות ביותר עם חומרים איכותיים וביצוע מדויק.
-              </p>
-            </div>
-
-            <div className="bg-black/50 backdrop-blur-md rounded-xl p-5 sm:p-7 border border-gold/30 hover:border-gold/60 transition-all duration-300 shadow-xl">
-              <h3 className="text-xl sm:text-2xl font-bold text-gold mb-3 sm:mb-4">
-                מערכות אבטחה וחכמות
-              </h3>
-              <p className="text-gray-200 leading-relaxed text-base sm:text-lg">
-                אינטרקום ומצלמות במעגל סגור, התקנת דלתות פנים הזזה, דלתות נסתרות ועוד.
-              </p>
+              <div className="space-y-2 text-gray-200 leading-relaxed text-base sm:text-lg">
+                <p><span className="font-semibold text-gold">בנייה, שיפוצים והרחבות</span><br />שיפוץ דירות, בתים פרטיים, יחידות דיור, הרחבות ותוספות בנייה ברמת גימור גבוהה.</p>
+                <p><span className="font-semibold text-gold">גמר, עיצוב ותשתיות</span><br />ריצוף, איטום, גבס, צבע, אינסטלציה, אלומיניום, דלתות, מטבחים ומערכות מתקדמות.</p>
+              </div>
             </div>
           </div>
         </div>
