@@ -45,7 +45,7 @@ const workExamples = [
 
 export default function WorkGallery() {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#f5f3ee]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 sm:mb-6">
@@ -61,7 +61,7 @@ export default function WorkGallery() {
           {workExamples.map((work, index) => (
             <Card 
               key={index}
-              className="group overflow-hidden hover:shadow-gold transition-all duration-300 border-0"
+              className="group overflow-hidden hover:shadow-gold transition-all duration-300 border-0 bg-[#faf7f3]"
             >
               <div className="relative overflow-hidden">
                 <img 

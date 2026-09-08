@@ -79,7 +79,7 @@ const services = [
 
 export default function ServicesGrid() {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-gray-light">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#f5f3ee]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 sm:mb-6">
@@ -95,7 +95,7 @@ export default function ServicesGrid() {
           {services.map((service, index) => (
             <Card 
               key={index}
-              className="group hover:shadow-gold transition-all duration-300 border-0 bg-white hover:transform hover:scale-105"
+              className="group hover:shadow-gold transition-all duration-300 border-0 bg-[#faf7f3] hover:transform hover:scale-105"
             >
               <CardContent className="p-4 sm:p-6 text-center">
                 <div className={`w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center group-hover:rotate-6 transition-transform duration-300`}>

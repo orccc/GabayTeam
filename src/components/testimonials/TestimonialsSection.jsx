@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
   const [activeVideo, setActiveVideo] = useState(null);
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#f5f3ee]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 sm:mb-6">
@@ -111,7 +111,7 @@ export default function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <Card 
               key={index}
-              className="group hover:shadow-gold transition-all duration-300 border-0 bg-gradient-to-br from-gray-50 to-white hover:transform hover:scale-105"
+              className="group hover:shadow-gold transition-all duration-300 border-0 bg-[#faf7f3] hover:transform hover:scale-105"
             >
               <CardContent className="p-6 text-center relative">
                 <div className="absolute top-4 right-4 opacity-20">
@@ -156,17 +156,17 @@ export default function TestimonialsSection() {
         </div>
 
         <div className="text-center mt-12">
-          <div className="inline-flex items-center gap-3 bg-black-light/5 rounded-full px-6 py-3">
+          <div className="inline-flex items-center gap-3 bg-[#faf7f3] rounded-full px-6 py-3 border border-gold/20 shadow-sm">
             <div className="flex">
               {[...Array(5)].map((_, index) => (
                 <Star key={index} className="h-5 w-5 text-gold fill-gold" />
               ))}
             </div>
             <span className="text-lg font-semibold text-black">
-              5.0 דירוג ממוצע
+              4.8 דירוג ממוצע
             </span>
             <span className="text-gray-500">
-              מעל 100 לקוחות מרוצים
+              מזמינים אתכם להצטרף למאגר הלקוחות שלנו
             </span>
           </div>
         </div>

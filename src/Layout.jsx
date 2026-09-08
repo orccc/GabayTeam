@@ -20,9 +20,13 @@ export default function Layout({ children, currentPageName }) {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           margin: 0;
           padding: 0;
-          background: var(--white);
+          background: #f5f3ee;
           color: var(--black);
           line-height: 1.6;
+        }
+
+        .page-shell {
+          background: #f5f3ee;
         }
         
         .gold-gradient {
@@ -84,7 +88,7 @@ export default function Layout({ children, currentPageName }) {
         }
       `}</style>
       
-      <div className="min-h-screen bg-white rtl">
+      <div className="min-h-screen page-shell rtl">
         <FloatingHeader logoUrl={logoUrl} />
         <main className="pt-20 sm:pt-24">
           {children}

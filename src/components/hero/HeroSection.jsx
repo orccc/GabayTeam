@@ -19,7 +19,7 @@ export default function HeroSection({ videoUrl }) {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center justify-center">
+    <section className="relative min-h-screen overflow-hidden flex items-center justify-center bg-[#f5f3ee]">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -28,11 +28,10 @@ export default function HeroSection({ videoUrl }) {
         }}
       />
       
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      {/* Warm overlay to keep the premium neutral feel */}
+      <div className="absolute inset-0 bg-[#171310]/60"></div>
       
-      {/* Gradient Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#171310]/85 via-[#171310]/45 to-[#171310]/60"></div>
 
       <div className="relative z-10 container mx-auto px-4 py-6 sm:py-8">
         {/* Main Content */}
@@ -56,7 +55,7 @@ export default function HeroSection({ videoUrl }) {
 
           {/* Video Section */}
           <div className="animate-slide-up mb-8">
-            <Card className="bg-black-light/40 backdrop-blur-md border-gold/30 overflow-hidden shadow-2xl">
+            <Card className="bg-[#201b18]/60 backdrop-blur-md border-gold/30 overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.25)]">
               <CardContent className="p-0">
                 {videoUrl ? (
                   <div className="relative aspect-video">
@@ -113,7 +112,7 @@ export default function HeroSection({ videoUrl }) {
 
           {/* Services Content */}
           <div className="animate-fade-in">
-            <div className="bg-black/50 backdrop-blur-md rounded-xl p-5 sm:p-7 border border-gold/30 hover:border-gold/60 transition-all duration-300 shadow-xl">
+            <div className="bg-[#f3ebdf]/10 backdrop-blur-md rounded-xl p-5 sm:p-7 border border-gold/30 hover:border-gold/60 transition-all duration-300 shadow-xl">
               <h3 className="text-xl sm:text-2xl font-bold text-gold mb-3 sm:mb-4">
                 גבאי מאז שנות ה-90 ועד היום מעטפת מקצועית תחת קורת גג אחת
               </h3>

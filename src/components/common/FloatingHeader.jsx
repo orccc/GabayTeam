@@ -3,7 +3,7 @@ import { Phone } from 'lucide-react';
 
 export default function FloatingHeader({ logoUrl }) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black shadow-md rtl">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#1d1b18] shadow-[0_10px_30px_rgba(36,28,18,0.18)] rtl">
       <div className="container mx-auto px-4 sm:px-6 py-2">
         <div className="flex justify-between items-center">
           {/* לוגו */}
