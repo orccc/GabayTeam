@@ -25,9 +25,9 @@ const testimonials = [
 
   },
   {
-    name: "מסעדת הבית הלבן",
+    name: "יוליה",
     rating: 5,
-    testimonial: "שיפצו לנו את כל המסעדה - ריצוף, צבע וגבס. התוצאה מעבר לציפיות, לקוחות מתרשמים מהמקום."
+    testimonial: "אני רוצה להגיד שאלי הקבלן הכי קשוב שפגשתי, עונה לכל השאלות ויודע לתת תשובות למציאות בשטח עם המון רוח וסבלנות"
   },
   {
     name: "דנה ואברהם רוזן",
@@ -156,18 +156,28 @@ export default function TestimonialsSection() {
         </div>
 
         <div className="text-center mt-12">
-          <div className="inline-flex items-center gap-3 bg-[#faf7f3] rounded-full px-6 py-3 border border-gold/20 shadow-sm">
-            <div className="flex">
-              {[...Array(5)].map((_, index) => (
-                <Star key={index} className="h-5 w-5 text-gold fill-gold" />
-              ))}
+          <div className="inline-flex flex-col items-center gap-3 bg-[#faf7f3] rounded-full px-6 py-4 border border-gold/20 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="flex">
+                {[...Array(5)].map((_, index) => (
+                  <Star key={index} className="h-5 w-5 text-gold fill-gold" />
+                ))}
+              </div>
+              <span className="text-lg font-semibold text-black">
+                4.8 דירוג ממוצע
+              </span>
             </div>
-            <span className="text-lg font-semibold text-black">
-              4.8 דירוג ממוצע
-            </span>
             <span className="text-gray-500">
               מזמינים אתכם להצטרף למאגר הלקוחות שלנו
             </span>
+            <a
+              href="https://search.google.com/local/writereview?placeid=ChIJNyE74RQrAxUR0h4p5gH2KOw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-gold px-5 py-2 text-sm font-semibold text-black transition-all duration-300 hover:bg-gold-dark"
+            >
+              כתבו לנו ביקורת ב-Google
+            </a>
           </div>
         </div>
       </div>
