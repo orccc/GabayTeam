@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Star, Quote, Eye, X } from "lucide-react";
 
 const testimonials = [
@@ -8,14 +7,14 @@ const testimonials = [
     name: "המוציא - מסעדת השף של אבי לוי",
     rating: 5,
     testimonial: "טוב התקשרתי ומישהו הכי נחמד שבעולם היה אצלי תוך שעה אני בעל מסעדה מאד מוכרת בירושלים הבעלים של המוציא , הגיע אדם מקצועי ונחמד מאין כמוהו וראה את המצוקה שפשוט חייב לפתוח את המסעדה וצריך ממש לסיים מהר לא האמנתי שזה קורה הוא הכניס צוות תוך שעה עם כל הכלים ופשוט עבדו עד לתוך הלילה ובכזו מקצועיות פשוט אין לי מילים להביע תודה שרות עזה בחיים שלי לא קיבלתי ופשוט אסירות תודה שיש כאלה בעלי מקצוע כן ירבו המלצתי היא הכי כנה שבעולם ואין לי ספק בכלל שכל מי שיקח אותם יהיה מאושר אז ברור שמומלץ בחום",
-    image: "https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/a68ddfb0a_Avilevi.jpg",
+    image: "/images/testimonial-avi-levi.webp",
     videoUrl: "https://www.youtube.com/shorts/m4-MMAEefyw"
   },
   {
     name: "משפחת כהן גבעת הרואה",
     rating: 5,
     testimonial: "טוב, אז אני רק משתף אתכם כלקוח מהחוויה שלי. הזמנתי את אליהו להצעת מחיר עבור עבודות פרוייקט מסירת מפתח. הם עמדו בזמנים ובעמטפת מקצועית של מספר עבודות מגוונות בבית שלי החל מריצוף, חשמל, אינסטלציה ועד עבודות אלומיניום על ידי אנשי מקצוע תחת קורת גג אחת. גבאי תודה רבה!",
-    image: "https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/23c58fd6b_9118f877-9a43-415c-97a7-7d09f3048032.jpg",
+    image: "/images/testimonial-cohen.webp",
     videoUrl: "https://www.youtube.com/watch?v=63RiWxjTqIg"
   },
   {

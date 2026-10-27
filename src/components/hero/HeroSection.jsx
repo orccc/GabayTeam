@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { PlayCircle, Upload, Shield } from "lucide-react";
+import { PlayCircle, Shield } from "lucide-react";
 
 export default function HeroSection({ videoUrl }) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -24,7 +24,7 @@ export default function HeroSection({ videoUrl }) {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1920&h=1080&fit=crop&crop=center')`,
+          backgroundImage: `url('/images/hero-bg.webp')`,
         }}
       />
       
@@ -60,9 +60,9 @@ export default function HeroSection({ videoUrl }) {
                 {videoUrl ? (
                   <div className="relative aspect-video">
                     {!isVideoPlaying ? (
-                      <div className="relative">
+                      <div className="relative h-full">
                        <img 
-                         src="https://media.base44.com/images/public/6877bb8d274d4fc432d2e2f6/58ef18488_Gemini_Generated_Image_dgl58qdgl58qdgl5.png"
+                         src="/images/hero-video-poster.webp"
                          alt="תמונה מקדימה של הסרטון"
                          className="w-full h-full object-cover"
                        />
@@ -90,8 +90,8 @@ export default function HeroSection({ videoUrl }) {
                 ) : (
                   <div className="relative aspect-video overflow-hidden">
                     <img
-                      src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1280&h=720&fit=crop&crop=center"
-                      alt="סלון מעוצב לאחר שיפוץ"
+                      src="/images/hero-video-poster.webp"
+                      alt="גבאי יזמות בנייה ושיפוצים"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">

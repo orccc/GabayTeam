@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
@@ -8,12 +8,8 @@ import {
   Facebook, 
   Music,
   MapPin,
-  Clock,
-  Mail,
-  Send,
-  X
+  Clock
 } from "lucide-react";
-import { base44 } from "@/api/base44Client";
 
 const contactMethods = [
   {
@@ -48,7 +44,7 @@ const contactMethods = [
     title: "פייסבוק",
     subtitle: "הצטרף לעמוד",
     action: "פתח פייסבוק",
-    href: "https://facebook.com/eligabay22",
+    href: "https://www.facebook.com/share/1A5RCbfufa/",
     color: "from-blue-600 to-blue-700",
     description: "עדכונים וטיפים"
   },
@@ -64,34 +60,6 @@ const contactMethods = [
 ];
 
 export default function ContactSection() {
-  const [showEmailModal, setShowEmailModal] = useState(false);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [message, setMessage] = useState("");
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-
-  const handleSendEmail = async () => {
-    if (!name.trim() || !phone.trim()) return;
-    setSending(true);
-    await base44.integrations.Core.SendEmail({
-      to: "tovor777@gmail.com",
-      subject: `פנייה חדשה מהאתר מ-${name}`,
-      body: `שם: ${name}\nטלפון: ${phone}\nכתובת: ${address || "לא צוינה"}\n\nהודעה:\n${message || "לא צוינה"}`
-    });
-    setSending(false);
-    setSent(true);
-    setTimeout(() => {
-      setShowEmailModal(false);
-      setSent(false);
-      setName("");
-      setPhone("");
-      setAddress("");
-      setMessage("");
-    }, 2000);
-  };
-
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-[#f5f3ee] text-black">
       <div className="container mx-auto px-4">
@@ -105,25 +73,7 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6 mb-12 sm:mb-16">
-          <Card 
-            className="group bg-[#faf7f3] border-gold/40 hover:border-gold cursor-pointer transition-all duration-300 hover:shadow-gold"
-            onClick={() => setShowEmailModal(true)}
-          >
-            <CardContent className="p-4 sm:p-6 text-center">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Mail className="h-6 w-6 sm:h-8 sm:w-8 text-black" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gold">
-                השאר פרטים
-              </h3>
-              <p className="text-gray-600 text-sm mb-2 sm:mb-3">קבל הצעת מחיר</p>
-              <p className="text-gold text-xs mb-3 sm:mb-4 font-bold">📩 לחץ כאן</p>
-              <Button className="w-full bg-gold hover:bg-gold-dark text-black font-semibold transition-all duration-300 text-sm sm:text-base">
-                שלח פרטים
-              </Button>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {contactMethods.map((method, index) => (
             <Card key={index} className="group bg-[#faf7f3] border-gold/20 hover:border-gold/60 transition-all duration-300 hover:shadow-gold">
               <CardContent className="p-4 sm:p-6 text-center">
@@ -171,90 +121,6 @@ export default function ContactSection() {
           </Card>
         </div>
       </div>
-
-      {/* Email Modal */}
-      {showEmailModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#f7f3ed] border border-gold/40 rounded-2xl w-full max-w-md p-6 sm:p-8 relative shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
-            <button
-              onClick={() => setShowEmailModal(false)}
-              className="absolute top-4 left-4 text-gray-500 hover:text-black transition-colors"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            <div className="text-center mb-6">
-            <Mail className="h-10 w-10 text-gold mx-auto mb-3" />
-            <h3 className="text-xl font-bold text-black">צור קשר</h3>
-            <p className="text-gray-600 text-sm mt-1">נחזור אליך בהקדם</p>
-            </div>
-
-            {sent ? (
-            <div className="text-center py-6">
-              <div className="text-green-400 text-5xl mb-3">✓</div>
-              <p className="text-black text-lg font-semibold">ההודעה נשלחה בהצלחה!</p>
-            </div>
-            ) : (
-            <div className="space-y-4">
-              <div>
-                <label className="text-gray-700 text-sm mb-1 block">שם *</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="הכנס שם מלא..."
-                  className="w-full bg-white border border-gold/30 rounded-lg px-4 py-2 text-black placeholder-gray-500 focus:outline-none focus:border-gold text-right"
-                />
-              </div>
-              <div>
-                <label className="text-gray-700 text-sm mb-1 block">טלפון *</label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="הכנס מספר טלפון..."
-                  className="w-full bg-white border border-gold/30 rounded-lg px-4 py-2 text-black placeholder-gray-500 focus:outline-none focus:border-gold text-right"
-                />
-              </div>
-              <div>
-                <label className="text-gray-700 text-sm mb-1 block">כתובת</label>
-                <input
-                  type="text"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="הכנס כתובת..."
-                  className="w-full bg-white border border-gold/30 rounded-lg px-4 py-2 text-black placeholder-gray-500 focus:outline-none focus:border-gold text-right"
-                />
-              </div>
-              <div>
-                <label className="text-gray-300 text-sm mb-1 block">הודעה</label>
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="כתוב כאן את ההודעה..."
-                  rows={4}
-                  className="w-full bg-black/50 border border-gold/30 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-gold resize-none text-right"
-                />
-              </div>
-              <Button
-                onClick={handleSendEmail}
-                disabled={sending || !name.trim() || !phone.trim()}
-                className="w-full bg-gold hover:bg-gold-dark text-black font-bold py-3 text-base"
-              >
-                {sending ? (
-                  "שולח..."
-                ) : (
-                  <>
-                    <Send className="h-4 w-4 ml-2" />
-                    שלח
-                  </>
-                )}
-              </Button>
-            </div>
-            )}
-          </div>
-        </div>
-      )}
     </section>
   );
 }
