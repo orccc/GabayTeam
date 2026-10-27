@@ -3,6 +3,14 @@
 אתר תדמית בעברית (RTL) לקבלן שיפוצים. נבנה במקור ב-Base44, היום מתארח ב-Firebase Hosting ונערך ב-VS Code.
 הבעלים של הפרויקט (המפתח) בונה ומתחזק את האתר ללקוח. עובד על Windows, התיקייה בתוך OneDrive.
 
+## עדכונים לאתר
+כל בקשה לשנות משהו באתר עוברת דרך הסקיל `site-update` (`.claude/skills/site-update/SKILL.md`):
+1. שינוי לפי הכללים.
+2. בדיקה (`scripts/check.mjs`).
+3. העלאה ל-preview channel ובדיקה (`scripts/verify-deploy.mjs`).
+4. הצגת התוצאה למשתמש.
+5. רק אחרי אישור מפורש: פריסה לאתר החי, אימות, commit ו-push.
+
 ## סטאק ופקודות
 - React 18 + Vite + Tailwind + shadcn/ui, עמוד יחיד (`src/pages/Home.jsx`).
 - Firebase project: `gabayteam-6d556` (מוגדר ב-`.firebaserc`), hosting מגיש את `dist`. האתר החי: https://gabayteam.co.il (וגם `gabayteam-6d556.web.app`).
@@ -48,8 +56,8 @@
 2. להוסיף פרויקטים אמיתיים ל-`src/data/projects.js` (בקשה מהמשתמש: תמונות + כותרת + קטגוריה).
 3. אחרי 1-2: שוב preview channel (https://gabayteam-6d556--preview-7z2ku1yn.web.app, בתוקף עד 3.11.2026; פריסה חוזרת לאותו ערוץ שומרת על הכתובת), בדיקה בטלפון, commit, ופריסה לאתר החי באישור המשתמש.
 4. בוט ההמלצות: הקוד ב-commit `a21d92b` (נדחף), ומותקן בשרת ב-27.10.2026 (Node 24, שירותי משתמש מופעלים, מחכה לטוקן). להפעלה:
-   - (המשתמש) להדביק את הטוקן ב-`~/GabayTeam/bot/.env` בשרת. השמירה מפעילה את הבוט.
-   - (המשתמש) לשלוח `/start`, ולהוסיף את המזהה שמתקבל ל-`ADMIN_IDS` באותו קובץ (או לקרוא אותו מ-`journalctl --user -u gabay-content-bot`, שורת `unauthorized`).
+   - ✅ הטוקן ו-`ADMIN_IDS` (המשתמש) מוגדרים ב-`~/GabayTeam/bot/.env`. הבוט: `@Gabayweb3085bot`, רץ בשרת.
+   - תוקן (`5888f7f`): בלי קובץ service account, ספריית Firestore זרקה שגיאה כפולה שהפילה את Node, והלחיצה נשלחה שוב בכל הפעלה (לולאה של 52 קריסות). עכשיו הבוט עונה שחסרה גישה ולא נופל.
    - ✅ נעשה ב-27.10.2026: מסד Firestore `(default)` ב-`me-west1`, Native, עם הגנה מפני מחיקה. החוקים נפרסו (לקח כ-5 דקות עד שהקריאה הציבורית עבדה בעקביות). נבדק בפרודקשן: קריאה של `testimonials` מחזירה 200, כתיבה ואוספים אחרים מחזירים 403. `firebase.json` מכיל `location: me-west1`, כי `firebase deploy` יוצר מסד חסר ב-`nam5` כברירת מחדל.
    - (המשתמש) service account בהרשאת Cloud Datastore User, והמפתח לשרת ב-`~/.config/gabay-content-bot/service-account.json`. אז לייבא את ההמלצות המקוריות דרך הבוט.
    - (באישור המשתמש) לפרוס את האתר. עד שיש נתונים ב-Firestore האתר מציג את ההמלצות המקוריות, כך שהסדר לא קריטי.
