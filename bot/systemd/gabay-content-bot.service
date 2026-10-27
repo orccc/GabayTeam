@@ -1,0 +1,16 @@
+# בוט הטלגרם לעדכון תוכן האתר. שירות systemd של המשתמש (בלי sudo), ראה README.md
+# שים לב: gabay-bot.service בשרת הוא הצ'אט של האתר – שירות אחר.
+[Unit]
+Description=Gabay website content bot (Telegram)
+
+[Service]
+Type=simple
+WorkingDirectory=%h/GabayTeam/bot
+EnvironmentFile=%h/GabayTeam/bot/.env
+ExecStart=%h/.local/node/bin/node src/index.js
+Restart=always
+RestartSec=10
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

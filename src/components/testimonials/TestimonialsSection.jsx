@@ -1,44 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote, Eye, X } from "lucide-react";
+import { defaultTestimonials } from "@/data/testimonials";
+import { fetchCollection } from "@/lib/firestore";
 
-const testimonials = [
-  {
-    name: "המוציא - מסעדת השף של אבי לוי",
-    rating: 5,
-    testimonial: "טוב התקשרתי ומישהו הכי נחמד שבעולם היה אצלי תוך שעה אני בעל מסעדה מאד מוכרת בירושלים הבעלים של המוציא , הגיע אדם מקצועי ונחמד מאין כמוהו וראה את המצוקה שפשוט חייב לפתוח את המסעדה וצריך ממש לסיים מהר לא האמנתי שזה קורה הוא הכניס צוות תוך שעה עם כל הכלים ופשוט עבדו עד לתוך הלילה ובכזו מקצועיות פשוט אין לי מילים להביע תודה שרות עזה בחיים שלי לא קיבלתי ופשוט אסירות תודה שיש כאלה בעלי מקצוע כן ירבו המלצתי היא הכי כנה שבעולם ואין לי ספק בכלל שכל מי שיקח אותם יהיה מאושר אז ברור שמומלץ בחום",
-    image: "/images/testimonial-avi-levi.webp",
-    videoUrl: "https://www.youtube.com/shorts/m4-MMAEefyw"
-  },
-  {
-    name: "משפחת כהן גבעת הרואה",
-    rating: 5,
-    testimonial: "טוב, אז אני רק משתף אתכם כלקוח מהחוויה שלי. הזמנתי את אליהו להצעת מחיר עבור עבודות פרוייקט מסירת מפתח. הם עמדו בזמנים ובעמטפת מקצועית של מספר עבודות מגוונות בבית שלי החל מריצוף, חשמל, אינסטלציה ועד עבודות אלומיניום על ידי אנשי מקצוע תחת קורת גג אחת. גבאי תודה רבה!",
-    image: "/images/testimonial-cohen.webp",
-    videoUrl: "https://www.youtube.com/watch?v=63RiWxjTqIg"
-  },
-  {
-    name: "עדן א.",
-    rating: 5,
-    testimonial: "ממליצה מאוד! בן אדם מאוד אמין לב מזהב עבודה יסודית באמת שכיום קשה לפגוש אנשי מקצוע כאלו ברמה הזאת של האמינות באדיבות וכמובן המקצעיות אין על אליהו איש מקצוע מיוחד במינו ממליצה באמת בחום"
+// ההמלצות נטענות מ-Firestore (מתעדכנות דרך בוט הטלגרם), ממוינות לפי השדה order.
+// אם אין שם המלצות או שהטעינה נכשלה, מוצגות ההמלצות המקוריות מהקוד.
+function useTestimonials() {
+  const [testimonials, setTestimonials] = useState(null);
 
-  },
-  {
-    name: "יוליה",
-    rating: 5,
-    testimonial: "אני רוצה להגיד שאלי הקבלן הכי קשוב שפגשתי, עונה לכל השאלות ויודע לתת תשובות למציאות בשטח עם המון רוח וסבלנות"
-  },
-  {
-    name: "דנה ואברהם רוזן",
-    rating: 5,
-    testimonial: "צוות אמין ומקצועי. עבודות הצבע והשפכטל יצאו ברמה מושלמת. בהחלט נחזור אליהם שוב."
-  },
-  {
-    name: "חברת טכנולוגיות מתקדמות",
-    rating: 5,
-    testimonial: "התקנת מערכת אינטרקום ומצלמות אבטחה במשרדי החברה. עבודה מהירה, מקצועית ויעילה."
-  }
-];
+  useEffect(() => {
+    let cancelled = false;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    fetchCollection("testimonials", { signal: controller.signal })
+      .then((docs) => docs.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)))
+      .catch(() => [])
+      .then((docs) => {
+        if (!cancelled) setTestimonials(docs.length ? docs : defaultTestimonials);
+      })
+      .finally(() => clearTimeout(timeout));
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, []);
+
+  return testimonials;
+}
 
 const StarRating = ({ rating }) => {
   return (
@@ -92,9 +83,10 @@ function getYouTubeEmbedUrl(videoUrl) {
 
 export default function TestimonialsSection() {
   const [activeVideo, setActiveVideo] = useState(null);
+  const testimonials = useTestimonials();
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-[#f5f3ee]">
+    <section id="testimonials" className="py-12 sm:py-16 lg:py-20 bg-[#f5f3ee]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 sm:mb-6">
@@ -106,10 +98,13 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
+        {/* עד שההמלצות נטענות שומרים מקום, כדי שהעמוד לא יקפוץ */}
+        {!testimonials && <div className="min-h-[320px]" />}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {testimonials.map((testimonial, index) => (
-            <Card 
-              key={index}
+          {testimonials?.map((testimonial, index) => (
+            <Card
+              key={testimonial.id ?? index}
               className="group hover:shadow-gold transition-all duration-300 border-0 bg-[#faf7f3] hover:transform hover:scale-105"
             >
               <CardContent className="p-6 text-center relative">

@@ -5,17 +5,21 @@
 
 ## סטאק ופקודות
 - React 18 + Vite + Tailwind + shadcn/ui, עמוד יחיד (`src/pages/Home.jsx`).
-- Firebase project: `gabayteam-6d556` (מוגדר ב-`.firebaserc`), hosting מגיש את `dist`.
+- Firebase project: `gabayteam-6d556` (מוגדר ב-`.firebaserc`), hosting מגיש את `dist`. האתר החי: https://gabayteam.co.il (וגם `gabayteam-6d556.web.app`).
 - Repo: github.com/orccc/GabayTeam (ענף `main`).
 - `npm run dev` – שרת פיתוח (localhost:5173)
 - `npm run build` ואז `npm run preview` – בדיקת גרסת פרודקשן מקומית (localhost:4173)
 - `node scripts/optimize-images.mjs` – מייצר WebP מכווץ ב-`public/images` מהמקורות ב-`assets/originals` (משתמש ב-`sharp`, תלות פיתוח)
 - `firebase hosting:channel:deploy preview --expires 7d` – כתובת בדיקה זמנית, בלי לגעת באתר החי
-- `firebase deploy --only hosting` – עלייה לאוויר. **לא לפרוס בלי אישור מפורש של המשתמש.**
+- `firebase deploy --only hosting` – עלייה לאוויר. **לא לפרוס בלי אישור מפורש של המשתמש.** תמיד עם `--only`: `firebase.json` מכיל גם את `dataconnect` (Cloud SQL, עולה כסף).
+- `npm run dev:emulator` – האתר מול אמולטור Firestore (`.env.emulator`, פרויקט `demo-gabay`, localhost:5174). את האמולטור מפעילים בנפרד: `firebase emulators:start --only firestore --project demo-gabay`.
+- `cd bot && npm test` – בדיקת קצה-לקצה של הבוט מול אמולטור Firestore (צריך Java). לא נוגע בפרויקט האמיתי.
 
 ## מבנה
 - `src/pages/Home.jsx` מרכיב: Hero, ServicesGrid, WorkGallery, AboutSection, TestimonialsSection, ContactSection.
-- ההמלצות הן מערך קשיח בתוך `TestimonialsSection.jsx` (name, rating, testimonial, image, videoUrl).
+- ההמלצות: `TestimonialsSection.jsx` קורא את האוסף `testimonials` מ-Firestore דרך REST (`src/lib/firestore.js`, בלי SDK) וממיין לפי `order`. אם האוסף ריק או שהטעינה נכשלה, מוצגות ההמלצות המקוריות מ-`src/data/testimonials.js`. שדות: name, rating, testimonial, image (נתיב או data URL), videoUrl (יוטיוב), order.
+- `firestore.rules`: קריאה ציבורית ל-`testimonials` בלבד, אין כתיבה מהדפדפן. כל אוסף חדש שהאתר קורא צריך להיפתח שם.
+- בוט טלגרם: `bot/` (חבילה נפרדת, Node + grammY, long polling). פירוט והוראות התקנה ב-`bot/README.md`. מבנה: `bot.js` (הרשאות, תפריט), `testimonials.js` (המסכים), `db.js` (Firestore), `images.js` (תמונות).
 - גלריית פרויקטים: `src/components/gallery/WorkGallery.jsx`, הנתונים ב-`src/data/projects.js`. מוסתרת כל עוד המערך ריק. אין להשתמש בתמונות סטוק כ"עבודות שביצענו".
 - תמונות: המקורות ב-`assets/originals/` (לא עולים לאתר), הגרסאות שמוגשות הן WebP ב-`public/images/` (נוצרות בסקריפט, לא עורכים ידנית). הגדלים מוגדרים ברשימה `siteImages` בתוך `scripts/optimize-images.mjs`.
 - תמונות פרויקטים: מקור ב-`assets/originals/projects/`, מריצים את הסקריפט, ומפנים ב-`projects.js` ל-`/images/projects/<שם>.webp` (עד 1600px, מיושר לפי EXIF).
@@ -26,8 +30,10 @@
 - הצ'אט הדיגיטלי (Gemini API) שולח לידים לוואטסאפ, ולכן **אין טופס יצירת קשר באתר** (הוסר). נשארו טלפון, וואטסאפ, רשתות, כתובת ושעות.
 - האתר ציבורי: אין התחברות ואין שום תלות ב-Base44 (קוד, חבילות `@base44/*` והפלאגין של Vite הוסרו).
 - התוכנית ארוכת הטווח: הלקוח יעדכן תוכן (המלצות, תמונות פרויקטים, שעות) דרך בוט טלגרם, לא דרך קוד.
+- הבוט רץ על שרת Hetzner של המשתמש (`berber@2.29.53.208`, Ubuntu, 1GB; זה גם השרת של הצ'אט), כשירות systemd של המשתמש `gabay-content-bot`. ל-berber אין sudo בלי סיסמה, אז הכול מותקן בתוך הבית שלו (Node ב-`~/.local/node`, הקוד ב-`~/GabayTeam`). **`gabay-bot.service` שם הוא הצ'אט של האתר – לא לגעת.** פרטים ב-`bot/README.md`. כי הבוט לא על Cloud Functions, **אין צורך בתוכנית Blaze**. Firestore בתוכנית החינמית. הבוט כותב עם service account בהרשאת Cloud Datastore User בלבד. הגישה מוגבלת למזהי טלגרם ב-`ADMIN_IDS`.
+- אין Firebase Storage (בפרויקט חדש הוא דורש Blaze). תמונת לקוח בהמלצה נשמרת כ-data URL (עיגול 160px, כ-5KB) בתוך המסמך. לתמונות של גלריית הפרויקטים (גדולות) יידרש פתרון אחר, למשל הגשה מהשרת.
 
-## מה נעשה (ב-commit על `main` ב-27.10.2026; עדיין לא נפרס לאתר החי ולא נדחף ל-GitHub)
+## מה נעשה (commit `78302db` על `main`, נדחף ל-GitHub ונפרס לאתר החי ב-27.10.2026)
 - הוסר טופס "השאר פרטים" ו-`base44.integrations.SendEmail` מ-ContactSection.
 - כל התמונות הורדו מ-Base44/Unsplash ל-`assets/originals/` והומרו ל-WebP: מ-3.4MB ל-170KB בסך הכול. נוסף `favicon.png` (64px) במקום הלוגו המלא.
 - `App.jsx` פושט: בלי AuthProvider/NavigationTracker. `PageNotFound` ירד מ-Base44 ותורגם לעברית.
@@ -40,8 +46,13 @@
 ## מה נשאר – לפי סדר
 1. להחליף את רקע הפתיח (סטוק Unsplash, `assets/originals/hero-bg.jpg`) בתמונה אמיתית של פרויקט: לשים את המקור באותו שם ולהריץ את הסקריפט.
 2. להוסיף פרויקטים אמיתיים ל-`src/data/projects.js` (בקשה מהמשתמש: תמונות + כותרת + קטגוריה).
-3. פריסה לאתר החי, באישור המשתמש בלבד. ב-27.10.2026 הגרסה הנוכחית הועלתה ל-https://gabayteam-6d556--preview-7z2ku1yn.web.app (בתוקף עד 3.11.2026, בלי רקע ופרויקטים אמיתיים), המשתמש בדק בטלפון ואישר, ונעשה commit. פריסה חוזרת לאותו ערוץ שומרת על הכתובת.
-4. שלב הבא: להעביר המלצות/פרויקטים/הגדרות ל-Firestore + תמונות ל-Storage, והרכיבים יקראו משם עם גיבוי לנתונים הקיימים. אחר כך בוט טלגרם (Cloud Function עם webhook, `secret_token`, רשימת chat ID מורשים; כתיבה דרך Admin SDK; חוקי Firestore: קריאה ציבורית). פריסת Functions דורשת תוכנית Blaze.
+3. אחרי 1-2: שוב preview channel (https://gabayteam-6d556--preview-7z2ku1yn.web.app, בתוקף עד 3.11.2026; פריסה חוזרת לאותו ערוץ שומרת על הכתובת), בדיקה בטלפון, commit, ופריסה לאתר החי באישור המשתמש.
+4. בוט ההמלצות: הקוד מוכן ונבדק מול האמולטור (27.10.2026, עדיין לא ב-commit). להפעלה:
+   - (המשתמש) ליצור בוט ב-BotFather, ו-service account בהרשאת Cloud Datastore User עם מפתח JSON.
+   - (באישור המשתמש) ליצור את מסד Firestore בפרויקט – המיקום קבוע לתמיד, ההמלצה היא `me-west1` (תל אביב) – ולפרוס `firebase deploy --only firestore:rules`.
+   - (המשתמש) להתקין את הבוט בשרת לפי `bot/README.md`, ולייבא את ההמלצות המקוריות דרך הבוט.
+   - (באישור המשתמש) לפרוס את האתר. עד שיש נתונים ב-Firestore האתר מציג את ההמלצות המקוריות, כך שהסדר לא קריטי.
+5. אחר כך באותו בוט: פרויקטים לגלריה (צריך לפתור איפה התמונות נשמרות) ושעות פעילות.
 
 ## נקודות לבדיקה עם המשתמש
 - הדירוג "4.8 דירוג ממוצע" בהמלצות כתוב קשיח – צריך להתאים לדירוג האמיתי בגוגל.

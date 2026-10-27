@@ -28,3 +28,8 @@ dist-ssr
 *.sw?
 
 .env
+# קבצי דוגמה/הגדרות בלי סודות
+!.env.example
+!.env.emulator
+# מפתח service account של Firebase – אף פעם לא בגיט
+*service-account*.json

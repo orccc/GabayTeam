@@ -1,0 +1,10 @@
+# מפעיל מחדש את הבוט בכל פעם שקובץ ה-.env נשמר (טוקן, ADMIN_IDS וכו')
+[Unit]
+Description=Restart the Gabay content bot when its .env changes
+
+[Path]
+PathChanged=%h/GabayTeam/bot/.env
+Unit=gabay-content-bot-env.service
+
+[Install]
+WantedBy=default.target

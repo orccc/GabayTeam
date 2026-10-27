@@ -1,0 +1,6 @@
+[Unit]
+Description=Restart the Gabay content bot after .env changed
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user restart gabay-content-bot.service
