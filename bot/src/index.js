@@ -1,4 +1,5 @@
 // הפעלה: npm start (קורא את .env), או כשירות systemd (ראה README.md)
+import { existsSync } from "node:fs";
 import { createBot } from "./bot.js";
 import { connectFirestore, testimonialsRepo } from "./db.js";
 // ההמלצות המקוריות של האתר, בשביל כפתור הייבוא. לכן הבוט רץ מתוך עותק מלא של הריפו.
@@ -11,6 +12,18 @@ function env(name, fallback) {
     process.exit(1);
   }
   return value;
+}
+
+// ספריית Firestore זורקת שגיאת הרשאות פעמיים, ואת אחת מהן אף אחד לא תופס.
+// בלי זה Node מפיל את הבוט, וטלגרם שולח שוב את אותה לחיצה בכל הפעלה – לולאה של קריסות.
+// השגיאה עצמה כבר מטופלת ב-bot.catch, אז כאן רק רושמים אותה.
+process.on("unhandledRejection", (error) => {
+  console.error(`[${new Date().toISOString()}] unhandled rejection: ${error?.message ?? error}`);
+});
+
+const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+if (credentials && !existsSync(credentials)) {
+  console.warn(`קובץ ה-service account לא נמצא (${credentials}). הבוט עולה, אבל לא יוכל לקרוא או לשמור המלצות.`);
 }
 
 const adminIds = (process.env.ADMIN_IDS ?? "")

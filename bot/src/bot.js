@@ -56,8 +56,20 @@ export function createBot({ token, adminIds, repo, defaultTestimonials, siteUrl,
 
   bot.catch(async ({ ctx, error }) => {
     console.error(`[${new Date().toISOString()}] update ${ctx.update.update_id} failed:`, error);
-    await ctx.reply("😕 משהו השתבש. נסה שוב, או שלח /start.").catch(() => {});
+    await ctx.reply(errorMessage(error)).catch(() => {});
   });
 
   return bot;
+}
+
+// בעיית גישה ל-Firestore היא בעיית הגדרה בשרת, לא באג – אומרים בדיוק מה חסר
+function errorMessage(error) {
+  const text = String(error?.message ?? error);
+  if (/credential/i.test(text)) {
+    return "⚠️ אין לבוט גישה למסד הנתונים: קובץ ה-service account בשרת חסר או לא תקין.";
+  }
+  if (error?.code === 7 || /PERMISSION_DENIED/.test(text)) {
+    return "⚠️ אין לבוט הרשאה למסד הנתונים. ל-service account צריך להיות התפקיד Cloud Datastore User.";
+  }
+  return "😕 משהו השתבש. נסה שוב, או שלח /start.";
 }
