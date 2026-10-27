@@ -7,6 +7,8 @@ Description=Gabay website content bot (Telegram)
 Type=simple
 WorkingDirectory=%h/GabayTeam/bot
 EnvironmentFile=%h/GabayTeam/bot/.env
+# כל עוד אין טוקן ב-.env השירות לא עולה (ולא נכנס ללולאת הפעלות). שמירת הטוקן מפעילה אותו.
+ExecCondition=/bin/sh -c 'grep -qE "^TELEGRAM_BOT_TOKEN=.+" "%h/GabayTeam/bot/.env"'
 ExecStart=%h/.local/node/bin/node src/index.js
 Restart=always
 RestartSec=10

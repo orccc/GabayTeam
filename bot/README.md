@@ -44,7 +44,7 @@ systemctl --user restart gabay-content-bot    # הפעלה מחדש ידנית
 
 ## עדכון גרסה
 ```bash
-cd ~/GabayTeam && git pull && cd bot && npm ci --omit=dev
+cd ~/GabayTeam && git pull && cd bot && PATH=~/.local/node/bin:$PATH npm ci --omit=dev
 cp systemd/* ~/.config/systemd/user/ && systemctl --user daemon-reload
 systemctl --user restart gabay-content-bot
 ```
