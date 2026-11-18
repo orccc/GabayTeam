@@ -62,9 +62,9 @@ node .claude/skills/site-update/scripts/check.mjs
 
 ```bash
 firebase hosting:channel:deploy preview --expires 7d --non-interactive
-node .claude/skills/site-update/scripts/verify-deploy.mjs https://gabayteam-6d556--preview-7z2ku1yn.web.app
+node .claude/skills/site-update/scripts/verify-deploy.mjs https://gabayteam-6d556--preview-sdue624d.web.app
 ```
-הערוץ `preview` שומר על אותה כתובת בכל פריסה. אם הכתובת שהפקודה מחזירה שונה, משתמשים בזו שהיא מחזירה. `verify-deploy` מוודא שהכתובת מגישה בדיוק את ה-build המקומי ושכל התמונות נטענות.
+הערוץ `preview` שומר על אותה כתובת כל עוד הוא לא פג (7 ימים מהפריסה האחרונה). אחרי שהוא פג, הפריסה הבאה יוצרת כתובת חדשה. תמיד משתמשים בכתובת שהפקודה מחזירה (שורת `Channel URL`), ומעדכנים אותה כאן וב-CLAUDE.md. `verify-deploy` מוודא שהכתובת מגישה בדיוק את ה-build המקומי ושכל התמונות נטענות.
 
 מציגים למשתמש:
 1. **מה השתנה:** משפט או שניים במילים שלו, לא שמות קבצים. "שעות הפעילות בשישי עכשיו 7:00–13:00."
