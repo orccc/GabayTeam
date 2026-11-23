@@ -11,6 +11,12 @@
 4. הצגת התוצאה למשתמש.
 5. רק אחרי אישור מפורש: פריסה לאתר החי, אימות, commit ו-push.
 
+**מסלול שני, בהקמה (23.11.2026): הלקוח עורך בעצמו דרך ChatGPT (Codex).**
+- **איך זה עובד:** Codex עושה שינוי בענף ופותח pull request. GitHub Actions בונה preview לכל pull request (`.github/workflows/firebase-hosting-pull-request.yml`) ופורס לאתר החי בכל push ל-`main` (`firebase-hosting-merge.yml`, רק Hosting).
+- **הוראות ל-ChatGPT:** `AGENTS.md`. **מדריך ללקוח:** `docs/chatgpt-guide.md`.
+- **שים לב:** ברגע שזה פעיל, גם push שלך ל-`main` פורס לאתר החי. הסקיל `site-update` צריך התאמה, כדי שלא יפרוס פעמיים.
+- **מה חסר:** ה-secret `FIREBASE_SERVICE_ACCOUNT_GABAYTEAM_6D556` (המשתמש מריץ `firebase init hosting:github` ועונה N לכל השאלות שאחרי הריפו), הזמנת הלקוח כ-collaborator, ובדיקת pull request ראשון.
+
 ## סטאק ופקודות
 - React 18 + Vite + Tailwind + shadcn/ui, עמוד יחיד (`src/pages/Home.jsx`).
 - Firebase project: `gabayteam-6d556` (מוגדר ב-`.firebaserc`), hosting מגיש את `dist`. האתר החי: https://gabayteam.co.il (וגם `gabayteam-6d556.web.app`).

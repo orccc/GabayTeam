@@ -3,7 +3,8 @@
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
-// הקבצים האלה שמורים ב-CRLF (ראה CLAUDE.md). sed של Git Bash הופך אותם בשקט ל-LF.
+// במחשב הפיתוח (Windows) הקבצים האלה הם CRLF, ו-sed של Git Bash הופך אותם בשקט ל-LF.
+// בגיט עצמו הכול נשמר כ-LF, אז בלינוקס (GitHub Actions, ChatGPT) אין מה לבדוק.
 const CRLF_FILES = [
   "index.html",
   "src/pages/Home.jsx",
@@ -24,10 +25,12 @@ function step(name, run) {
   }
 }
 
-step("סופי שורות CRLF", () => {
-  const broken = CRLF_FILES.filter((file) => /(^|[^\r])\n/.test(readFileSync(file, "utf8")));
-  if (broken.length) throw new Error(`יש שורות LF בקבצים שצריכים להיות CRLF: ${broken.join(", ")}`);
-});
+if (process.platform === "win32") {
+  step("סופי שורות CRLF", () => {
+    const broken = CRLF_FILES.filter((file) => /(^|[^\r])\n/.test(readFileSync(file, "utf8")));
+    if (broken.length) throw new Error(`יש שורות LF בקבצים שצריכים להיות CRLF: ${broken.join(", ")}`);
+  });
+}
 
 step("lint", () => {
   execSync("npx eslint . --quiet", { stdio: "pipe" });

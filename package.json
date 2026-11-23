@@ -7,6 +7,7 @@
     "dev": "vite",
     "dev:emulator": "vite --mode emulator",
     "build": "vite build",
+    "check": "node .claude/skills/site-update/scripts/check.mjs",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
